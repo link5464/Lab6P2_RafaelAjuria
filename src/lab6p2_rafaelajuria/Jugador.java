@@ -17,13 +17,13 @@ public class Jugador extends Integrantes {
     int TarjetasRojas;
     int DuracionContrato;
 
-    public Jugador(int Numero, int PartidosJugados, int CopasGanadas, int TarjetasAmarillas, int TarjetasRojas, int DuracionContrato, String Nombre, String Apellido, String Nacionalidad, int Edad) {
+    public Jugador(int Numero, int DuracionContrato, String Nombre, String Apellido, String Nacionalidad, int Edad) {
         super(Nombre, Apellido, Nacionalidad, Edad);
         this.Numero = Numero;
-        this.PartidosJugados = PartidosJugados;
-        this.CopasGanadas = CopasGanadas;
-        this.TarjetasAmarillas = TarjetasAmarillas;
-        this.TarjetasRojas = TarjetasRojas;
+        this.PartidosJugados = 0;
+        this.CopasGanadas = 0;
+        this.TarjetasAmarillas = 0;
+        this.TarjetasRojas = 0;
         this.DuracionContrato = DuracionContrato;
     }
 

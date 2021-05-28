@@ -16,13 +16,13 @@ public class Psicologos extends Integrantes {
     int CntInformes;
     int CntPacientes;
 
-    public Psicologos(String Titulo, int ID, String Especialidad, int CntInformes, int CntPacientes, String Nombre, String Apellido, String Nacionalidad, int Edad) {
+    public Psicologos(String Titulo, int ID, String Especialidad, String Nombre, String Apellido, String Nacionalidad, int Edad) {
         super(Nombre, Apellido, Nacionalidad, Edad);
         this.Titulo = Titulo;
         this.ID = ID;
         this.Especialidad = Especialidad;
-        this.CntInformes = CntInformes;
-        this.CntPacientes = CntPacientes;
+        this.CntInformes = 0;
+        this.CntPacientes = 0;
     }
 
     public String getTitulo() {

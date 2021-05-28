@@ -13,10 +13,10 @@ public class Entrenador extends Integrantes {
     int Contrato;
     int CopasGanadas;
 
-    public Entrenador(int Contrato, int CopasGanadas, String Nombre, String Apellido, String Nacionalidad, int Edad) {
+    public Entrenador(int Contrato, String Nombre, String Apellido, String Nacionalidad, int Edad) {
         super(Nombre, Apellido, Nacionalidad, Edad);
         this.Contrato = Contrato;
-        this.CopasGanadas = CopasGanadas;
+        this.CopasGanadas = 0;
     }
     
     @Override
