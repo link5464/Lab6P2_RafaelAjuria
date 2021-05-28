@@ -6,7 +6,7 @@
 package lab6p2_rafaelajuria;
 
 /**
- *f     
+ *
  * @author rajur
  */
 public class GUI extends javax.swing.JFrame {
