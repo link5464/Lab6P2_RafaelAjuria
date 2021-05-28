@@ -226,6 +226,11 @@ public class GUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTree_Integrantes);
 
         jButton_Menu.setText("Menu");
+        jButton_Menu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_MenuMouseClicked(evt);
+            }
+        });
 
         jButton_Salir.setText("Salir");
         jButton_Salir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -274,13 +279,15 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTreeModel Integrantes=(DefaultTreeModel) jTree_Integrantes.getModel();
         DefaultMutableTreeNode Root = (DefaultMutableTreeNode) Integrantes.getRoot();
-        DefaultMutableTreeNode NodoJugador;
-        DefaultMutableTreeNode NodoPsicologos;
-        DefaultMutableTreeNode NodoEntrenador;
-        DefaultMutableTreeNode NodoPreparadorFisico;
+        DefaultMutableTreeNode NodoIntegrante;
+        DefaultMutableTreeNode NodoJugador = new DefaultMutableTreeNode("Jugadores");
+        DefaultMutableTreeNode NodoPsicologos = new DefaultMutableTreeNode("Psicologos");
+        DefaultMutableTreeNode NodoEntrenador = new DefaultMutableTreeNode("Entrenadores");
+        DefaultMutableTreeNode NodoPreparadorFisico = new DefaultMutableTreeNode("Preparadores Fisicos");
         if(jRadioButton_Jugador.isSelected())
         {
-           NodoJugador = new DefaultMutableTreeNode(new Jugador(
+           
+           NodoIntegrante = new DefaultMutableTreeNode(new Jugador(
                    Integer.parseInt(jTextField_NumJugador.getText()),
                    (Integer) jSpinner_DurCont.getValue(),
                    jTextField_Nombre.getText(),
@@ -288,6 +295,7 @@ public class GUI extends javax.swing.JFrame {
                    jTextField_Nacionalidad.getText(),
                    (Integer) jSpinner_Edad.getValue()
                     ));
+           NodoJugador.add(NodoIntegrante);
            Root.add(NodoJugador);
         }
         if(jRadioButton_Psicologo.isSelected())
@@ -304,6 +312,13 @@ public class GUI extends javax.swing.JFrame {
         }
         Integrantes.reload();
     }//GEN-LAST:event_jButton_AgregarIntegranteMouseClicked
+
+    private void jButton_MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_MenuMouseClicked
+        // TODO add your handling code here:
+        jDialog_AgregarIntegrante.pack();
+        jDialog_AgregarIntegrante.setLocationRelativeTo(this);
+        jDialog_AgregarIntegrante.setVisible(true);
+    }//GEN-LAST:event_jButton_MenuMouseClicked
 
     /**
      * @param args the command line arguments
