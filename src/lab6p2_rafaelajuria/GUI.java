@@ -14,6 +14,10 @@ import javax.swing.tree.DefaultTreeModel;
  * @author rajur
  */
 public class GUI extends javax.swing.JFrame {
+    int NodoJugadorInicializado=0;
+    int NodoEntrenadorInicializado=0;
+    int NodoPsicologoInicializado=0;
+    int NodoPreparadorInicializado=0;
 
     /**
      * Creates new form GUI
@@ -255,16 +259,15 @@ public class GUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jButton_Menu)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_Salir)))
+                .addGap(74, 74, 74)
+                .addComponent(jButton_Menu)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_Salir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -279,14 +282,22 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTreeModel Integrantes=(DefaultTreeModel) jTree_Integrantes.getModel();
         DefaultMutableTreeNode Root = (DefaultMutableTreeNode) Integrantes.getRoot();
-        DefaultMutableTreeNode NodoIntegrante;
         DefaultMutableTreeNode NodoJugador = new DefaultMutableTreeNode("Jugadores");
         DefaultMutableTreeNode NodoPsicologos = new DefaultMutableTreeNode("Psicologos");
         DefaultMutableTreeNode NodoEntrenador = new DefaultMutableTreeNode("Entrenadores");
         DefaultMutableTreeNode NodoPreparadorFisico = new DefaultMutableTreeNode("Preparadores Fisicos");
+        DefaultMutableTreeNode NodoIntegrante;
+        if(NodoJugadorInicializado==0)
+           {
+              Root.add(NodoJugador); 
+              Root.add(NodoPsicologos);
+              Root.add(NodoEntrenador);
+              Root.add(NodoPreparadorFisico);
+              NodoJugadorInicializado=1;
+           }
+        
         if(jRadioButton_Jugador.isSelected())
         {
-           
            NodoIntegrante = new DefaultMutableTreeNode(new Jugador(
                    Integer.parseInt(jTextField_NumJugador.getText()),
                    (Integer) jSpinner_DurCont.getValue(),
@@ -295,8 +306,8 @@ public class GUI extends javax.swing.JFrame {
                    jTextField_Nacionalidad.getText(),
                    (Integer) jSpinner_Edad.getValue()
                     ));
-           NodoJugador.add(NodoIntegrante);
-           Root.add(NodoJugador);
+           ((DefaultMutableTreeNode)Root.getChildAt(0)).add(NodoIntegrante);
+           NodoJugador.add(NodoIntegrante); 
         }
         if(jRadioButton_Psicologo.isSelected())
         {
