@@ -61,6 +61,9 @@ public class GUI extends javax.swing.JFrame {
         jMenuItem_Eliminar = new javax.swing.JMenuItem();
         jMenuItem_ListarPropiedades = new javax.swing.JMenuItem();
         jMenuItem_Modificar = new javax.swing.JMenuItem();
+        jFrame_TablaDeAtributos = new javax.swing.JFrame();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable_Atributos = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree_Integrantes = new javax.swing.JTree();
         jButton_Menu = new javax.swing.JButton();
@@ -234,10 +237,38 @@ public class GUI extends javax.swing.JFrame {
         jPopupMenu.add(jMenuItem_Eliminar);
 
         jMenuItem_ListarPropiedades.setText("Listar Propiedades");
+        jMenuItem_ListarPropiedades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ListarPropiedadesActionPerformed(evt);
+            }
+        });
         jPopupMenu.add(jMenuItem_ListarPropiedades);
 
         jMenuItem_Modificar.setText("Modificar");
         jPopupMenu.add(jMenuItem_Modificar);
+
+        jTable_Atributos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Apellido", "Nacionalidad", "Edad", "ID", "Duracion Cont.", "Especialidad", "Titulo"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable_Atributos);
+
+        javax.swing.GroupLayout jFrame_TablaDeAtributosLayout = new javax.swing.GroupLayout(jFrame_TablaDeAtributos.getContentPane());
+        jFrame_TablaDeAtributos.getContentPane().setLayout(jFrame_TablaDeAtributosLayout);
+        jFrame_TablaDeAtributosLayout.setHorizontalGroup(
+            jFrame_TablaDeAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame_TablaDeAtributosLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jFrame_TablaDeAtributosLayout.setVerticalGroup(
+            jFrame_TablaDeAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -397,7 +428,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jMenuItem_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_EliminarActionPerformed
         // TODO add your handling code here:
-        int response = JOptionPane.showConfirmDialog(this.getFrames()[0],"Seguro de Eliminar?","Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE); 
+        int response = JOptionPane.showConfirmDialog(this.getFrames()[0],"Desea Eliminar este elemento?","Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE); 
         if(response == JOptionPane.OK_OPTION) 
         {
             DefaultTreeModel m=(DefaultTreeModel)jTree_Integrantes.getModel();
@@ -405,6 +436,16 @@ public class GUI extends javax.swing.JFrame {
                     m.reload();
         }      
     }//GEN-LAST:event_jMenuItem_EliminarActionPerformed
+
+    private void jMenuItem_ListarPropiedadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ListarPropiedadesActionPerformed
+        // TODO add your handling code here:
+        jFrame_TablaDeAtributos.pack();
+        jFrame_TablaDeAtributos.setVisible(true);
+        jTable_Atributos.setValueAt(IntegranteSeleccionado.getNombre(),0,0);
+        jTable_Atributos.setValueAt(IntegranteSeleccionado.getApellido(),0,1);
+        jTable_Atributos.setValueAt(IntegranteSeleccionado.getNacionalidad(),0,2);
+        jTable_Atributos.setValueAt(IntegranteSeleccionado.getEdad(),0,3);
+    }//GEN-LAST:event_jMenuItem_ListarPropiedadesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,6 +488,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton_Menu;
     private javax.swing.JButton jButton_Salir;
     private javax.swing.JDialog jDialog_AgregarIntegrante;
+    private javax.swing.JFrame jFrame_TablaDeAtributos;
     private javax.swing.JLabel jLabel_Apellido;
     private javax.swing.JLabel jLabel_DurCont;
     private javax.swing.JLabel jLabel_Edad;
@@ -465,8 +507,10 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton_Preparador;
     private javax.swing.JRadioButton jRadioButton_Psicologo;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner_DurCont;
     private javax.swing.JSpinner jSpinner_Edad;
+    private javax.swing.JTable jTable_Atributos;
     private javax.swing.JTextField jTextField_Apellido;
     private javax.swing.JTextField jTextField_Especialidad;
     private javax.swing.JTextField jTextField_Nacionalidad;
