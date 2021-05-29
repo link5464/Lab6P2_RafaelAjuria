@@ -245,6 +245,11 @@ public class GUI extends javax.swing.JFrame {
         jPopupMenu.add(jMenuItem_ListarPropiedades);
 
         jMenuItem_Modificar.setText("Modificar");
+        jMenuItem_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ModificarActionPerformed(evt);
+            }
+        });
         jPopupMenu.add(jMenuItem_Modificar);
 
         jTable_Atributos.setModel(new javax.swing.table.DefaultTableModel(
@@ -445,7 +450,33 @@ public class GUI extends javax.swing.JFrame {
         jTable_Atributos.setValueAt(IntegranteSeleccionado.getApellido(),0,1);
         jTable_Atributos.setValueAt(IntegranteSeleccionado.getNacionalidad(),0,2);
         jTable_Atributos.setValueAt(IntegranteSeleccionado.getEdad(),0,3);
+        if(NodoSeleccionado.getUserObject() instanceof Jugador)
+        {
+         IntegranteSeleccionado= (Jugador) NodoSeleccionado.getUserObject();
+        }
+        if(NodoSeleccionado.getUserObject() instanceof Entrenador)
+        {
+         IntegranteSeleccionado= (Entrenador) NodoSeleccionado.getUserObject();
+        }
+        if(NodoSeleccionado.getUserObject() instanceof Psicologos)
+        {
+         IntegranteSeleccionado= (Psicologos) NodoSeleccionado.getUserObject();
+        }
+        if(NodoSeleccionado.getUserObject() instanceof PreparadorFisico)
+        {
+         IntegranteSeleccionado= (PreparadorFisico) NodoSeleccionado.getUserObject();
+        }
     }//GEN-LAST:event_jMenuItem_ListarPropiedadesActionPerformed
+
+    private void jMenuItem_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ModificarActionPerformed
+        // TODO add your handling code here:
+        DefaultTreeModel m=(DefaultTreeModel)jTree_Integrantes.getModel();
+        IntegranteSeleccionado.setNombre(JOptionPane.showInputDialog("Nombre"));
+        IntegranteSeleccionado.setApellido(JOptionPane.showInputDialog("Apellido"));
+        IntegranteSeleccionado.setNacionalidad(JOptionPane.showInputDialog("Nacionalidad"));
+        IntegranteSeleccionado.setEdad(Integer.parseInt(JOptionPane.showInputDialog("Edad")));
+        m.reload();
+    }//GEN-LAST:event_jMenuItem_ModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -519,6 +550,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_Titulo;
     private javax.swing.JTree jTree_Integrantes;
     // End of variables declaration//GEN-END:variables
-DefaultMutableTreeNode NodoSeleccionado;
-Integrantes IntegranteSeleccionado;
+    DefaultMutableTreeNode NodoSeleccionado;
+    Integrantes IntegranteSeleccionado;
 }
