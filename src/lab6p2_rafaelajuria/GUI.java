@@ -6,6 +6,7 @@
 package lab6p2_rafaelajuria;
 
 
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -14,10 +15,7 @@ import javax.swing.tree.DefaultTreeModel;
  * @author rajur
  */
 public class GUI extends javax.swing.JFrame {
-    int NodoJugadorInicializado=0;
-    int NodoEntrenadorInicializado=0;
-    int NodoPsicologoInicializado=0;
-    int NodoPreparadorInicializado=0;
+    int NodosInicializado=0;
 
     /**
      * Creates new form GUI
@@ -59,6 +57,10 @@ public class GUI extends javax.swing.JFrame {
         jRadioButton_Entrenador = new javax.swing.JRadioButton();
         jButton_AgregarIntegrante = new javax.swing.JButton();
         buttonGroup_Integrante = new javax.swing.ButtonGroup();
+        jPopupMenu = new javax.swing.JPopupMenu();
+        jMenuItem_Eliminar = new javax.swing.JMenuItem();
+        jMenuItem_ListarPropiedades = new javax.swing.JMenuItem();
+        jMenuItem_Modificar = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree_Integrantes = new javax.swing.JTree();
         jButton_Menu = new javax.swing.JButton();
@@ -223,13 +225,32 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jButton_AgregarIntegrante))
         );
 
+        jMenuItem_Eliminar.setText("Eliminar");
+        jMenuItem_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_EliminarActionPerformed(evt);
+            }
+        });
+        jPopupMenu.add(jMenuItem_Eliminar);
+
+        jMenuItem_ListarPropiedades.setText("Listar Propiedades");
+        jPopupMenu.add(jMenuItem_ListarPropiedades);
+
+        jMenuItem_Modificar.setText("Modificar");
+        jPopupMenu.add(jMenuItem_Modificar);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Integrantes");
         jTree_Integrantes.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree_Integrantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTree_IntegrantesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTree_Integrantes);
 
-        jButton_Menu.setText("Menu");
+        jButton_Menu.setText("Agregar");
         jButton_Menu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton_MenuMouseClicked(evt);
@@ -287,13 +308,13 @@ public class GUI extends javax.swing.JFrame {
         DefaultMutableTreeNode NodoEntrenador = new DefaultMutableTreeNode("Entrenadores");
         DefaultMutableTreeNode NodoPreparadorFisico = new DefaultMutableTreeNode("Preparadores Fisicos");
         DefaultMutableTreeNode NodoIntegrante;
-        if(NodoJugadorInicializado==0)
+        if(NodosInicializado==0)
            {
               Root.add(NodoJugador); 
               Root.add(NodoPsicologos);
               Root.add(NodoEntrenador);
               Root.add(NodoPreparadorFisico);
-              NodoJugadorInicializado=1;
+              NodosInicializado=1;
            }
         
         if(jRadioButton_Jugador.isSelected())
@@ -307,19 +328,45 @@ public class GUI extends javax.swing.JFrame {
                    (Integer) jSpinner_Edad.getValue()
                     ));
            ((DefaultMutableTreeNode)Root.getChildAt(0)).add(NodoIntegrante);
-           NodoJugador.add(NodoIntegrante); 
         }
         if(jRadioButton_Psicologo.isSelected())
         {
+            NodoIntegrante = new DefaultMutableTreeNode(new Psicologos(
+                    jTextField_Titulo.getText(),
+                   Integer.parseInt(jTextField_NumJugador.getText()),
+                   jTextField_Especialidad.getText(),
+                   jTextField_Nombre.getText(),
+                   jTextField_Apellido.getText(),
+                   jTextField_Nacionalidad.getText(),
+                   (Integer) jSpinner_Edad.getValue()
+                    ));
+           ((DefaultMutableTreeNode)Root.getChildAt(1)).add(NodoIntegrante);
             
         }
         if(jRadioButton_Entrenador.isSelected())
         {
-            
+           NodoIntegrante = new DefaultMutableTreeNode(new Entrenador(
+                   (Integer) jSpinner_DurCont.getValue(),
+                   jTextField_Nombre.getText(),
+                   jTextField_Apellido.getText(),
+                   jTextField_Nacionalidad.getText(),
+                   (Integer) jSpinner_Edad.getValue()
+                    ));
+           ((DefaultMutableTreeNode)Root.getChildAt(2)).add(NodoIntegrante); 
         }
         if(jRadioButton_Preparador.isSelected())
         {
-            
+           NodoIntegrante = new DefaultMutableTreeNode(new PreparadorFisico(
+                   (Integer) jSpinner_DurCont.getValue(),
+                   Integer.parseInt(jTextField_NumJugador.getText()),
+                   jTextField_Especialidad.getText(),
+                   jTextField_Titulo.getText(),
+                   jTextField_Nombre.getText(),
+                   jTextField_Apellido.getText(),
+                   jTextField_Nacionalidad.getText(),
+                   (Integer) jSpinner_Edad.getValue()
+                    ));
+           ((DefaultMutableTreeNode)Root.getChildAt(3)).add(NodoIntegrante);  
         }
         Integrantes.reload();
     }//GEN-LAST:event_jButton_AgregarIntegranteMouseClicked
@@ -330,6 +377,34 @@ public class GUI extends javax.swing.JFrame {
         jDialog_AgregarIntegrante.setLocationRelativeTo(this);
         jDialog_AgregarIntegrante.setVisible(true);
     }//GEN-LAST:event_jButton_MenuMouseClicked
+
+    private void jTree_IntegrantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree_IntegrantesMouseClicked
+        // TODO add your handling code here:
+        if(evt.isMetaDown()){
+            //seleccionar un nodo con click derecho
+            int row = jTree_Integrantes.getClosestRowForLocation(
+                               evt.getX(), evt.getY());   
+            jTree_Integrantes.setSelectionRow(row);             
+            Object v1=jTree_Integrantes.getSelectionPath().getLastPathComponent();
+            NodoSeleccionado=(DefaultMutableTreeNode) v1;
+            
+            if(NodoSeleccionado.getUserObject() instanceof Integrantes){
+                IntegranteSeleccionado= (Integrantes) NodoSeleccionado.getUserObject();               
+                jPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());                
+            }            
+        }
+    }//GEN-LAST:event_jTree_IntegrantesMouseClicked
+
+    private void jMenuItem_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_EliminarActionPerformed
+        // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this.getFrames()[0],"Seguro de Eliminar?","Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE); 
+        if(response == JOptionPane.OK_OPTION) 
+        {
+            DefaultTreeModel m=(DefaultTreeModel)jTree_Integrantes.getModel();
+                    m.removeNodeFromParent(NodoSeleccionado);
+                    m.reload();
+        }      
+    }//GEN-LAST:event_jMenuItem_EliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,6 +456,10 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_NumJugador;
     private javax.swing.JLabel jLabel_TipoIntegrante;
     private javax.swing.JLabel jLabel_Titulo;
+    private javax.swing.JMenuItem jMenuItem_Eliminar;
+    private javax.swing.JMenuItem jMenuItem_ListarPropiedades;
+    private javax.swing.JMenuItem jMenuItem_Modificar;
+    private javax.swing.JPopupMenu jPopupMenu;
     private javax.swing.JRadioButton jRadioButton_Entrenador;
     private javax.swing.JRadioButton jRadioButton_Jugador;
     private javax.swing.JRadioButton jRadioButton_Preparador;
@@ -396,4 +475,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_Titulo;
     private javax.swing.JTree jTree_Integrantes;
     // End of variables declaration//GEN-END:variables
+DefaultMutableTreeNode NodoSeleccionado;
+Integrantes IntegranteSeleccionado;
 }
